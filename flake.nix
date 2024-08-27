@@ -6,10 +6,10 @@
   };
 
   outputs = {
-    nixpkgs,
+    self,
     rust-overlay,
+    nixpkgs,
     flake-utils,
-    ...
   }:
     flake-utils.lib.eachDefaultSystem (
       system: let
@@ -17,12 +17,23 @@
         pkgs = import nixpkgs {
           inherit system overlays;
         };
+        rustVersion = "latest";
+        rust = pkgs.rust-bin.stable.${rustVersion}.default.override {
+          extensions = [
+            "rust-src"
+            "rust-analyzer"
+          ];
+        };
       in
         with pkgs; {
           devShells.default = mkShell {
             buildInputs = [
-              rust-bin.beta.latest.default
+              pkg-config
+              hidapi
+              libusb1
+              rust
             ];
+            RUST_BACKTRACE = 1;
           };
         }
     );

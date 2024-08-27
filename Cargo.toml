@@ -1,0 +1,10 @@
+[package]
+name = "mcl_ssg"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+hidapi = { version = "2", features = [
+    "linux-shared-libusb",
+], default-features = false }
+thiserror = "1"
