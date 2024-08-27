@@ -23,3 +23,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 ```
+
+Linux requries the following udev rule (assuming your user is in `plugdev`)
+
+```
+SUBSYSTEM=="usb|hidraw", ATTRS{idVendor}=="20ce", ATTRS{idProduct}=="0012", MODE="660", GROUP="plugdev"
+```
